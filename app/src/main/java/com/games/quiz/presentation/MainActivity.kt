@@ -1,7 +1,8 @@
-package com.games.quiz
+package com.games.quiz.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.games.quiz.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
