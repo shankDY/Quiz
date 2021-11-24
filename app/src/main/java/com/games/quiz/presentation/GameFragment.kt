@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.games.quiz.R
 import com.games.quiz.databinding.FragmentGameBinding
 import com.games.quiz.domain.entity.GameResult
+import com.games.quiz.domain.entity.GameSettings
 import com.games.quiz.domain.entity.Level
 
 class GameFragment : Fragment() {
@@ -38,12 +39,34 @@ class GameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.tvOption1.setOnClickListener {
+            launchGameFinishedFragment(
+                GameResult(
+                    true,
+                    0,
+                    0,
+                    GameSettings(
+                        0,
+                        0,
+                        0,
+                        0
+                    )
+                )
+            )
+        }
     }
 
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+
+    private fun parseArgs() {
+        requireArguments().getParcelable<Level>(KEY_LEVEL)?.let {
+            level = it
+        }
     }
 
     private fun launchGameFinishedFragment(gameResult: GameResult) {
@@ -54,9 +77,6 @@ class GameFragment : Fragment() {
     }
 
 
-    private fun parseArgs() {
-        level = requireArguments().getSerializable(KEY_LEVEL) as Level
-    }
 
     companion object {
 
@@ -67,7 +87,7 @@ class GameFragment : Fragment() {
         fun newInstance(level: Level): GameFragment {
             return GameFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(KEY_LEVEL, level)
+                    putParcelable(KEY_LEVEL, level)
                 }
             }
         }
